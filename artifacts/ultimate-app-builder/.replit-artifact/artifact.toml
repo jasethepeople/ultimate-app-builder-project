@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Ultimate App Builder"
+description = "A functional browser-based app building workspace with a visual canvas, component palette, inspector, AI assistant, project persistence, preview mode, mesh and agent simulations, and code export."
+version = "1.0.0"
+id = "artifacts/ultimate-app-builder"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25554
+
+[services.development]
+run = "pnpm --filter @workspace/ultimate-app-builder run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/ultimate-app-builder", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/ultimate-app-builder/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25554"
+BASE_PATH = "/"
